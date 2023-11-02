@@ -1,0 +1,5 @@
+.*
+!.gitlab-ci.yml
+!.gitignore
+*/target/
+*/node/

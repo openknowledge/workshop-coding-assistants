@@ -1,0 +1,8 @@
+== Initiales Projekt Setup
+
+Falls ein neues Projekt mit "Standard" Tech-Stack gestartet werden soll, ist hier ein kleiner
+Guide wie das Projekt aufgesetzt werden soll.
+
+Steps:
+
+. link:./setup_steps/initial_setup.adoc[Initiales Projekt anlegen]
