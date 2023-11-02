@@ -1,8 +1,6 @@
 .*
-!.gitlab-ci.yml
 !.gitignore
 !.dockerignore
-!.claude/
-.claude/settings.local.json
+!.opencode/
 */target/
 */node/
