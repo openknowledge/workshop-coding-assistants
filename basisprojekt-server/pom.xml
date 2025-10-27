@@ -11,7 +11,7 @@
 	<groupId>de.openknowledge</groupId>
 	<artifactId>basisprojekt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>basisprojekt-server</name>
+	<name>Basisprojekt Server</name>
 	<description>open knowledge base project</description>
 	<url/>
 	<licenses>
@@ -59,6 +59,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- tag::client-dependency[] -->
+        <dependency>
+            <groupId>de.openknowledge</groupId>
+            <artifactId>basisprojekt-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+		<!-- end::client-dependency[] -->
 	</dependencies>
 
 	<build>

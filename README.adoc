@@ -6,3 +6,4 @@ Guide wie das Projekt aufgesetzt werden soll.
 Steps:
 
 . link:./setup_steps/initial_setup.adoc[Initiales Projekt anlegen]
+. link:./setup_steps/maven_build.adoc[Maven-Build aufsetzen]
