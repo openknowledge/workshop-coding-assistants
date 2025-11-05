@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.openknowledge.baseproject;
+package de.openknowledge.baseproject.counter;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static java.lang.Integer.MAX_VALUE;
+import static java.util.Objects.checkIndex;
 
-@SpringBootTest
-class BasisprojektServerApplicationTests {
+import com.fasterxml.jackson.annotation.JsonValue;
 
-    @Test
-    void contextLoads() {}
+public record CounterValue(@JsonValue int value) {
+
+    public static final CounterValue ZERO = new CounterValue(0);
+
+    public CounterValue {
+        checkIndex(value, MAX_VALUE);
+    }
 }

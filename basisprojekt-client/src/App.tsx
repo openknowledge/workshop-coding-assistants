@@ -1,10 +1,38 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number | undefined>();
+
+  const fetchCount = async () => {
+    try {
+      const response = await fetch('api/counters/example');
+      const value = await response.json();
+      setCount(Number(value));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchCount();
+  }, []);
+
+  const updateCount = useCallback(() => {
+    setCount((count) => {
+      const newCount = (count ?? 0) + 1;
+      fetch('api/counters/example', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: String(newCount),
+      }).catch(console.error);
+      return newCount;
+    });
+  }, []);
 
   return (
     <>
@@ -18,12 +46,12 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        {count !== undefined ? (
+          <button onClick={updateCount}>count is {count}</button>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </>
   );
 }
