@@ -47,7 +47,7 @@ docker-compose:
     - echo "✅ Start Page found";
     - echo "Testing REST Call..."
     - RESPONSE=$(curl -sf http://docker:8080/api/counters/example)
-    - echo "$RESPONSE" | grep -q "0" || (echo "❌ Counter not found!"; exit 1)
+    - echo "$RESPONSE" | grep -q "42" || (echo "❌ Counter not found!"; exit 1)
     - echo "✅ Counter found."
   after_script:
     - docker compose down

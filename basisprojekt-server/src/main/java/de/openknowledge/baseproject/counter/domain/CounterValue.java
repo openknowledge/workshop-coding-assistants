@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.openknowledge.baseproject.counter;
+package de.openknowledge.baseproject.counter.domain;
 
-import static java.util.Objects.requireNonNull;
+import com.fasterxml.jackson.annotation.JsonValue;
+import jakarta.persistence.Embeddable;
 
-public record CounterName(String name) {
-    public CounterName {
-        requireNonNull(name);
-    }
-}
+@Embeddable
+public record CounterValue(@JsonValue int value) {}

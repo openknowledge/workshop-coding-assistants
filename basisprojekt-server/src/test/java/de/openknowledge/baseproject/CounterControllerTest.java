@@ -25,11 +25,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.web.client.RestClient;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
-@SpringBootTest(webEnvironment = RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = "spring.flyway.enabled=true")
 class CounterControllerTest {
+
+    @Container @ServiceConnection
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17");
 
     @LocalServerPort private int port;
 
@@ -44,23 +49,29 @@ class CounterControllerTest {
     void updateCounter() {
         // Given
         RestClient client = clientBuilder.build();
-        int count =
-                client.get()
-                        .uri("/counters/example")
-                        .accept(APPLICATION_JSON)
+        var createResponse =
+                client.post()
+                        .uri("/counters")
+                        .contentType(APPLICATION_JSON)
+                        .body(
+                                """
+                                {
+                                    "name": "test",
+                                    "value": 0
+                                }
+                                """)
                         .retrieve()
-                        .body(Integer.class);
-        assertThat(count).isEqualTo(0);
+                        .toBodilessEntity();
+        assertTrue(createResponse.getStatusCode().is2xxSuccessful(), "Creation successfull");
 
         // When
-        ResponseEntity<Void> response =
-                client.put().uri("/counters/example").body(42).retrieve().toBodilessEntity();
+        var response = client.put().uri("/counters/test").body(42).retrieve().toBodilessEntity();
         assertTrue(response.getStatusCode().is2xxSuccessful(), "Update successfull");
 
         // Then
         int updatedCount =
                 client.get()
-                        .uri("/counters/example")
+                        .uri("/counters/test")
                         .accept(APPLICATION_JSON)
                         .retrieve()
                         .body(Integer.class);

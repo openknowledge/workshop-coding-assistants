@@ -13,24 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.openknowledge.baseproject.counter;
+package de.openknowledge.baseproject.counter.domain;
 
-import static de.openknowledge.baseproject.counter.CounterValue.ZERO;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CounterRepository {
 
-    private Map<CounterName, CounterValue> counters = new ConcurrentHashMap<>();
+    @PersistenceContext private EntityManager entityManager;
 
-    public CounterValue findCounter(CounterName name) {
-        return counters.getOrDefault(name, ZERO);
+    public void persist(CounterEntity counter) {
+        entityManager.persist(counter);
     }
 
-    public void updateCounter(CounterName name, CounterValue value) {
-        counters.put(name, value);
+    public Optional<CounterEntity> find(CounterName name) {
+        return entityManager
+                .createNamedQuery(CounterEntity.BY_NAME, CounterEntity.class)
+                .setParameter("name", name.name())
+                .getResultStream()
+                .findFirst();
     }
 }
