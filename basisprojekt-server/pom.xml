@@ -60,11 +60,11 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- tag::client-dependency[] -->
-        <dependency>
-            <groupId>de.openknowledge</groupId>
-            <artifactId>basisprojekt-client</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>de.openknowledge</groupId>
+			<artifactId>basisprojekt-client</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- end::client-dependency[] -->
 	</dependencies>
 

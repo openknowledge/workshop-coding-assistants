@@ -8,3 +8,4 @@ Steps:
 . link:./setup_steps/initial_setup.adoc[Initiales Projekt anlegen]
 . link:./setup_steps/maven_build.adoc[Maven-Build aufsetzen]
 . link:./setup_steps/implementing_backend_formatter.adoc[Backend Formatter und Linter einrichten]
+. link:./setup_steps/linting-formatting.adoc[Frontend Formatter und Linter einrichten]
