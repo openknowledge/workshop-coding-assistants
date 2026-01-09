@@ -32,6 +32,6 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: geheim
     depends_on:
-      basisprojekt-database:
-        condition: service_started
+      flyway:
+        condition: service_completed_successfully
 # end::database-configuration[]
