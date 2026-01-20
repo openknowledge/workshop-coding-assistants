@@ -67,6 +67,11 @@
 		<!-- end::client-dependency[] -->
 		<!-- tag::database-dependencies[] -->
 		<dependency>
+		    <groupId>org.transactionunit</groupId>
+		    <artifactId>transactionunit</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<scope>test</scope>
@@ -111,6 +116,7 @@
                     </licenseHeader>
                     <java>
                         <googleJavaFormat>
+                            <version>1.27.0</version>
                             <style>AOSP</style>
                         </googleJavaFormat>
                         <removeUnusedImports />

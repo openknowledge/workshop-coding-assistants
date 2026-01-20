@@ -16,6 +16,7 @@
 package de.openknowledge.baseproject;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -27,7 +28,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.client.RestClient;
 
 @IntegrationTest
-class CounterControllerTest {
+class RollbackTest {
 
     @LocalServerPort private int port;
 
@@ -39,35 +40,54 @@ class CounterControllerTest {
     }
 
     @Test
-    void updateCounter() {
+    void updateCounterOnce() {
         // Given
         RestClient client = clientBuilder.build();
-        var createResponse =
-                client.post()
-                        .uri("/counters")
-                        .contentType(APPLICATION_JSON)
-                        .body(
-                                """
-                                {
-                                    "name": "test",
-                                    "value": 0
-                                }
-                                """)
+        int count =
+                client.get()
+                        .uri("/counters/example")
+                        .accept(APPLICATION_JSON)
                         .retrieve()
-                        .toBodilessEntity();
-        assertTrue(createResponse.getStatusCode().is2xxSuccessful(), "Creation successfull");
+                        .body(Integer.class);
+        assertEquals(42, count);
 
         // When
-        var response = client.put().uri("/counters/test").body(42).retrieve().toBodilessEntity();
+        var response = client.put().uri("/counters/example").body(43).retrieve().toBodilessEntity();
         assertTrue(response.getStatusCode().is2xxSuccessful(), "Update successfull");
 
         // Then
         int updatedCount =
                 client.get()
-                        .uri("/counters/test")
+                        .uri("/counters/example")
                         .accept(APPLICATION_JSON)
                         .retrieve()
                         .body(Integer.class);
-        assertThat(updatedCount).isEqualTo(42);
+        assertThat(updatedCount).isEqualTo(43);
+    }
+
+    @Test
+    void updateCounterTwice() {
+        // Given
+        RestClient client = clientBuilder.build();
+        int count =
+                client.get()
+                        .uri("/counters/example")
+                        .accept(APPLICATION_JSON)
+                        .retrieve()
+                        .body(Integer.class);
+        assertEquals(42, count);
+
+        // When
+        var response = client.put().uri("/counters/example").body(43).retrieve().toBodilessEntity();
+        assertTrue(response.getStatusCode().is2xxSuccessful(), "Update successfull");
+
+        // Then
+        int updatedCount =
+                client.get()
+                        .uri("/counters/example")
+                        .accept(APPLICATION_JSON)
+                        .retrieve()
+                        .body(Integer.class);
+        assertThat(updatedCount).isEqualTo(43);
     }
 }
