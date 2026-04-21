@@ -1,0 +1,6 @@
+{
+  "name": "<tool-name>",
+  "description": "Short description",
+  "command": ["executable", "$FILE"],
+  "enabled": true
+}
