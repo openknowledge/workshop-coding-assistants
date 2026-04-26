@@ -42,7 +42,7 @@ All exercises focus on implementing a **"Customer Deletion" feature** with a con
 1. Clone repository: 
 2. Check out the `baseline` branch
 3. Create a new local branch called `ex-01`
-4. Implement the **"Customer Deletion" feature** without any AI assistance:
+4. Implement the **"Customer Deletion" feature** with AI assistance:
    - Add a "Delete" button to the customer list in the UI
    - Create a backend endpoint to delete a customer
    - Handle the confirmation dialog and success/error states
@@ -53,7 +53,7 @@ All exercises focus on implementing a **"Customer Deletion" feature** with a con
 
 ---
 
-### Exercise #2: Meet Your AI Assistant ⏱️ ~25–30 min
+### Exercise #2: Meet Your AI Assistant ⏱️ ~20–25 min
 
 **What you'll learn**: How to use OpenCode commands to analyze your codebase and get AI-assisted implementation plans.
 
@@ -61,9 +61,10 @@ All exercises focus on implementing a **"Customer Deletion" feature** with a con
 1. Check out `baseline` again and create a new branch called `ex-02`
 2. Use the `/init` command to let OpenCode analyze the repository (it will create `AGENTS.md`)
 3. Ask the **Planning Agent** to create a detailed implementation plan for the customer deletion feature
-4. Ask the **Build Agent** to implement the feature based on the plan
-5. Let the agent do most of the work—only step in if something goes wrong
-6. Commit your changes
+4. Adjust the plan, if you want
+5. Ask the **Build Agent** to implement the feature based on the plan
+6. Let the agent do most of the work — only step in if something goes wrong
+7. Commit your changes
 
 **How you'll know you're done**: The feature is implemented by the AI with minimal manual intervention from you.
 
@@ -83,8 +84,7 @@ All exercises focus on implementing a **"Customer Deletion" feature** with a con
    - Outputs results with **file names and line numbers** for easy navigation
 3. Test your review command on your implementation
 4. Compare it with the review command in the `main` branch (optional challenge)
-
-**Bonus (optional)**: Implement automatic commit squashing with conventional commit messages (e.g., `feat: add customer deletion`).
+5. Outputs results with file names and line number for easy navigation
 
 **How you'll know you're done**: The `/review` command runs and produces meaningful feedback on your code changes.
 
@@ -111,21 +111,20 @@ temp: <agent-name>
 
 ---
 
-### Exercise #5: Integrate External Tools ⏱️ ~25–35 min
+### Exercise #5: Integrate External Tools ⏱️ ~30–35 min
 
 **What you'll learn**: How to extend OpenCode with external tools and verify implementations programmatically.
 
 **What to do**:
-1. Use your `ex-04` branch and create a new branch called `ex-05`
-2. The **confirmation dialog specification** is already defined in `specifications/2026-04-21-delete-customer.md`
-3. Implement the confirmation dialog according to the spec (if not already done)
-4. Create a verification workflow using the **Playwright MCP** (Model Context Protocol) that:
-   - Validates the dialog appears when the delete button is clicked
+1. Checkout "delete-customer-spec" and create "ex-05" branch
+2. The **confirmation dialog specification** is already defined in `specifications/2026-04-26-delete-customer.md`
+3. Implement the confirmation dialog according to the spec
+4. Let opencode using the Playwright MCP verify that:
+   - The dialog appears when the delete button is clicked
    - Confirms both "Confirm" and "Cancel" buttons work
    - Verifies the dialog styling matches the spec
-5. Let OpenCode use the Playwright MCP to verify your implementation automatically
 
-**How you'll know you're done**: The Playwright verification script runs successfully and confirms the dialog meets all requirements.
+**How you'll know you're done**: opencode is using Playwright MCP, makes a screenshot of the confirmation dialog and the dialog looks like the one specified
 
 ---
 
@@ -134,16 +133,15 @@ temp: <agent-name>
 **What you'll learn**: How to define a complete workflow with multiple specialized agents working together.
 
 **What to do**:
-1. Use your `ex-05` branch and create a new branch called `ex-06`
-2. Define and configure **five specialized agents**:
-   - **requirements-engineer**: Analyzes requirements
-   - **architect**: Designs the technical solution
-   - **developer**: Implements the code
-   - **tester**: Writes and runs tests
-   - **reviewer**: Reviews code quality and architecture
+1. Use your `delete-customer-spec` branch and create a new branch called `ex-06`
+2. Define and the following **specialized agents**:
+   - **Lead-dev**: creates the implementation plan, calls the frontend
+     and backend agents and makes sure the feature works fullstack
+   - **Frontend**: writes frontend code and tests
+   - **Backend**: writes backend code and tests
+   - Optional **QA**: makes sure the features matches the specification
 3. Create a workflow that orchestrates these agents to implement a new feature
 4. Ensure agents execute in the right order and each one triggers the next based on completion
-5. Test the workflow end-to-end
 
 **How you'll know you're done**: A full feature implementation is completed by the agent workflow with minimal human intervention.
 
