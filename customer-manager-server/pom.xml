@@ -58,13 +58,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- tag::client-dependency[] -->
-		<dependency>
-			<groupId>de.openknowledge</groupId>
-			<artifactId>customer-manager-client</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!-- end::client-dependency[] -->
 		<!-- tag::database-dependencies[] -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>

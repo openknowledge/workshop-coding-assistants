@@ -1,28 +1,28 @@
 # tag::client-build[]
-FROM maven:3.9.9-eclipse-temurin-21 AS client-build
-RUN mkdir -p /usr/customer-manager-client
-WORKDIR /usr
+#FROM maven:3.9.9-eclipse-temurin-21 AS client-build
+#RUN mkdir -p /usr/customer-manager-client
+#WORKDIR /usr
 
 # Cache node in a separate layer
-COPY customer-manager-client/pom.xml customer-manager-client/pom.xml
-RUN mvn -f customer-manager-client/pom.xml initialize
+#COPY customer-manager-client/pom.xml customer-manager-client/pom.xml
+#RUN mvn -f customer-manager-client/pom.xml initialize
 
 # Cache the dependencies in a separate layer
-COPY customer-manager-client/package.json customer-manager-client/package-lock.json customer-manager-client/
-RUN mvn -f customer-manager-client/pom.xml generate-sources
+#COPY customer-manager-client/package.json customer-manager-client/package-lock.json customer-manager-client/
+#RUN mvn -f customer-manager-client/pom.xml generate-sources
 
 # Build in a separate layer
-COPY customer-manager-client/ /usr/customer-manager-client/
-RUN mvn -f customer-manager-client/pom.xml install -DskipLinting -DskipTests
+#COPY customer-manager-client/ /usr/customer-manager-client/
+#RUN mvn -f customer-manager-client/pom.xml install -DskipLinting -DskipTests
 # end::client-build[]
 
 # tag::server-build[]
 FROM maven:3.9.9-eclipse-temurin-21 AS mvn
 
 # Cache maven dependency
-COPY customer-manager-client/pom.xml /usr/customer-manager-client/
-WORKDIR /usr/customer-manager-client
-RUN mvn -Dskip.npm install
+#COPY customer-manager-client/pom.xml /usr/customer-manager-client/
+#WORKDIR /usr/customer-manager-client
+#RUN mvn -Dskip.npm install
 COPY customer-manager-server/pom.xml /usr/customer-manager-server/
 COPY customer-manager-server/src/main/checkstyle/java.header.plain /usr/customer-manager-server/src/main/checkstyle/java.header.plain
 WORKDIR /usr/customer-manager-server
