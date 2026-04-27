@@ -30,7 +30,7 @@ RUN mvn dependency:resolve dependency:resolve-plugins dependency:go-offline spot
 
 # Copy client jar from client stage
 RUN mkdir -p /usr/customer-manager-server && mkdir -p /root/.m2/repository/de/openknowledge
-COPY --from=client-build /root/.m2/repository/de/openknowledge/ /root/.m2/repository/de/openknowledge/
+#COPY --from=client-build /root/.m2/repository/de/openknowledge/ /root/.m2/repository/de/openknowledge/
 
 # Build server
 COPY customer-manager-server/src src
