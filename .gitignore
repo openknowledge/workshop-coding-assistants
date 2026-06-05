@@ -4,3 +4,6 @@
 !.dockerignore
 */target/
 */node/
+tmp/
+.idea
+.env

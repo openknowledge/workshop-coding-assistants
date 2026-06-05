@@ -1,0 +1,37 @@
+# Self-hosted OpenCode server.
+#
+# Usage:
+#   docker compose -f docker-compose.opencode.yaml up -d --build
+#
+# Credentials: copy .devcontainer/.env.example to .env and fill in at least one
+# of ANTHROPIC_API_KEY / OPENAI_API_KEY / OPENROUTER_API_KEY / GROQ_API_KEY,
+# OR exec into the container once and run `opencode auth login` — the
+# opencode-auth volume persists those credentials across restarts.
+#
+# Reach the server at http://<host>:4096
+
+services:
+  opencode-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.opencode
+    image: workshop-coding-assistants/opencode-server:latest
+    container_name: opencode-server
+    restart: unless-stopped
+    ports:
+      - "4096:4096"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OPENCODE_HOSTNAME: 0.0.0.0
+      OPENCODE_PORT: 4096
+    volumes:
+      # The workspace OpenCode will edit. Mount the repo root so participants
+      # can drive the customer-manager codebase via the shared server.
+      - ./:/workspace
+      # Persist `opencode auth login` credentials across container restarts.
+      - opencode-auth:/root/.local/share/opencode
+
+volumes:
+  opencode-auth:
