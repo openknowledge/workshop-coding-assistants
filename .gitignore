@@ -1,4 +1,5 @@
 .*
+!.opencode
 !.gitlab-ci.yml
 !.gitignore
 !.dockerignore
